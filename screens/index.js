@@ -1,141 +1,203 @@
-import React, { useState } from "react";
-import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  TextInput,
-  Pressable
-} from "react-native";
+import * as React from "react";
+import { Text, View, Image, ScrollView, StyleSheet, TouchableHighlight } from "react-native";
 
-const RateTheAppScreen = (params) => {
-  const [review, setReview] = useState("");
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.heading}>How was your experience?</Text>
-        <Text style={styles.subhHeading}>
-          Use 5 star rating to rate an app or leave a text review.
-        </Text>
-      </View>
-      <Image
-        source={require("./assets/5starsImage.png")}
-        style={styles.image}
-      />
-      <Image
-        source={require("./assets/separator.png")}
-        style={styles.separator}
-      />
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputText}>Text review</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setReview(text)}
-          value={review}
-          placeholder="Enter"
-          placeholderTextColor="#9B9B9B"
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-      </View>
-      <Button buttonText={"Submit"} />
-      <Button buttonText={"Cancel"} outline={true} />
-    </View>
-  );
+const pressed = () => {
+  console.log("pressed");
 };
 
+const ActivityFeedScreen = () => {
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <ProfileImage />
+          <Text style={styles.headerText}>Jay Mahanga</Text>
+          <Text style={styles.headerSubText}>jay@gmail.com</Text>
+        </View>
+        <View style={styles.followingSection}>
+          <View style={styles.textarea}>
+            <Image style={styles.postIcon} source={require("./assets/posts.png")} />
+            <Text>My post</Text>
+          </View>
+          <View style={styles.textarea}>
+            <Image style={styles.followingIcon} source={require("./assets/following.png")} />
+            <Text style={styles.followingText}>Following</Text>
+          </View>
+        </View>
+
+        <View style={styles.pt30}>
+          <View style={styles.galleryRow}>
+            <View style={styles.smallPost}>
+              <Post onPress={pressed}/>
+            </View>
+            <View style={styles.smallPost}>
+              <Post onPress={pressed}/>
+            </View>
+            <View style={styles.smallPost}>
+              <Post onPress={pressed}/>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.pt10}>
+          <View style={styles.galleryRow}>
+            <View style={styles.columnRow}>
+              <View style={styles.smallPostcolumn}>
+                <Post />
+              </View>
+              <View style={styles.smallPostcolumn}>
+                <Post />
+              </View>
+            </View>
+            <View style={styles.largePost}>
+              <Post />
+            </View>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
 const styles = StyleSheet.create({
+
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center"
+    padding: 10,
+    height: "100%",
+    backgroundColor: "white"
   },
-  header: {
-    justifyContent: "center",
+
+  followingSection: {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 50
+    justifyContent: "space-around",
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 20
+
   },
-  heading: {
-    fontSize: 24,
+  headerContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignSelf: "center",
+    alignItems: "center"
+  },
+  headerText: {
+    marginTop: 15,
+    fontSize: 16,
     fontWeight: "bold"
   },
-  subhHeading: {
-    fontSize: 15,
-    lineHeight: 20,
-    marginTop: 10,
-    fontWeight: "bold",
-    textAlign: "center"
+  headerSubText: {
+    marginTop: 5,
+    fontSize: 12,
+    color: "#C4C4C4"
   },
-  image: {
-    alignSelf: "center"
+  postIcon: {
+    width: 15,
+    height: 15,
+    marginBottom: 5,
+
+    shadowColor: "#0000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 1.3,
+    shadowRadius: 3.84
+
   },
-  separator: {
-    alignSelf: "center",
-    marginVertical: 30
+  followingIcon: {
+    width: 15,
+    height: 15,
+    marginBottom: 5
   },
-  inputContainer: {
-    flexDirection: "column",
-    justifyContent: "center",
-    marginHorizontal: 20
+  textarea: {
+    display: "flex",
+    alignItems: "center"
   },
-  inputText: {
-    fontSize: 16,
-    marginLeft: 20,
-    color: "#111112"
+  followingText: {
+    fontSize: 14,
+    color: "#C4C4C4"
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "#e6e6e6",
-    borderRadius: 10,
-    padding: 10,
-    paddingLeft: 20,
-    marginVertical: 10,
+  pt30: {
+    paddingTop: 30
+  },
+  pt10: {
+    paddingTop: 5
+  },
+  galleryRow: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  smallPost: {
+    height: 120,
+    width: "33%",
+    paddingHorizontal: 3
+  },
+  columnRow: {
+    width: "33%"
+  },
+  smallPostcolumn: {
+    height: 120,
     width: "100%",
-    height: 150
+    padding: 3
+  },
+  largePost: {
+    height: 240,
+    width: "67%",
+    padding: 3
   }
 });
-export default RateTheAppScreen;
 
-const Button = ({ onPress, buttonText, outline }) => {
-  const btnStyle = {
-    backgroundColor: outline ? "#fff" : "#000",
-    borderColor: outline ? "#000" : "#fff",
-    borderWidth: 1
-  };
-  const btnText = {
-    color: outline ? "#000" : "#fff"
-  };
+export default ActivityFeedScreen;
+
+const Post = (props) => {
   return (
-    <View style={buttonStyles.btnContainer}>
-      <Pressable style={[buttonStyles.btn, btnStyle]} onPress={onPress}>
-        <Text style={[buttonStyles.btnText, btnText]}>{buttonText}</Text>
-      </Pressable>
-    </View>
+    <TouchableHighlight onPress={props.onPress} style={postStyles.galleryPost} underlayColor='#DDDDDD'>
+        <Image style={postStyles.editIcon} source={require("./assets/edit.png")} />
+    </TouchableHighlight>
   );
 };
 
-const buttonStyles = StyleSheet.create({
-  btnContainer: {
-    paddingTop: 10,
-    paddingHorizontal: 40,
-    justifyContent: "center",
-    marginTop: 20
-  },
-  btn: {
-    backgroundColor: "black",
-    height: 50,
-    width: "100%",
-    padding: 10,
-    paddingHorizontal: 25,
+const postStyles = StyleSheet.create({
+  galleryPost: {
     borderRadius: 10,
-    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#FCF1D6",
+    display: "flex",
     alignItems: "center",
-    shadowColor: "rgba(0, 0, 0, 0.2)",
-    elevation: 10
+    justifyContent: "center",
+    marginRight: 5
   },
-  btnText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold"
+  editIcon: {
+    height: 35,
+    width: 35
+  }
+
+});
+
+const ProfileImage = (props) => {
+  return (
+    <TouchableHighlight onPress={props.onPress} underlayColor='#DDDDDD'>
+      <View style={imageStyles.container}>
+        <Image style={imageStyles.image} resizeMode="contain" source={require("./assets/edit.png")} />
+      </View>
+    </TouchableHighlight>
+  );
+};
+
+const imageStyles = StyleSheet.create({
+  container: {
+    backgroundColor: "lightgray",
+    height: 70,
+    width: 70,
+    borderRadius: 35,
+    display: "flex",
+    alignItems: "center"
+  },
+  image: {
+    width: 20,
+    marginTop: 4
   }
 });
